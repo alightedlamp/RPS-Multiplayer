@@ -32,6 +32,15 @@ connectedRef.on('value', (snapshot) => {
   }
 });
 
+const updateGameState = function updateGameStateDisplay() {
+  gameRef.once('value', (snapshot) => {
+    $('#player-one-wins').text(snapshot.child('players/1').val().wins);
+    $('#player-two-wins').text(snapshot.child('players/2').val().wins);
+    $('#player-one-losses').text(snapshot.child('players/1').val().losses);
+    $('#player-two-losses').text(snapshot.child('players/2').val().losses);
+  });
+};
+
 // Handle changes when the game starts or database state changes
 gameRef.on('value', (snapshot) => {
   // Determine if a turn value exists. If not, game hasn't begun yet.
@@ -39,6 +48,8 @@ gameRef.on('value', (snapshot) => {
     // Add player one
     if (snapshot.child('players/1').exists()) {
       $('#player-one h3').text(snapshot.child('players/1').val().name);
+      // Show player one score
+      $('#player-one .stats').show();
     }
 
     // Add player two
@@ -47,6 +58,8 @@ gameRef.on('value', (snapshot) => {
       $('#player-submit-form').hide();
       // Add turn value to indicate game has begun
       gameRef.update({ turn: 1 });
+      // Show player two score
+      $('#player-two .stats').show();
     }
   }
   // If both players have made a choice, compute the result
@@ -58,33 +71,34 @@ gameRef.on('value', (snapshot) => {
     // Reset player choices
     gameRef.child('players/1/choice').remove();
     gameRef.child('players/2/choice').remove();
-    // Update wins and losses
+    // Update wins and losses - how can this be cleaned up?
     let wins;
     let losses;
     if (result === 'win') {
+      // Update wins
       wins = snapshot.child('players/1').val().wins + 1;
       gameRef.child('players/1').update({ wins });
+      // Update losses
       losses = snapshot.child('players/2').val().losses + 1;
       gameRef.child('players/2').update({ losses });
-      $('#player-one-wins').text(wins);
-      $('#player-two-losses').text(losses);
     } else if (result === 'lose') {
+      // Update wins
       wins = snapshot.child('players/2').val().wins + 1;
       gameRef.child('players/2').update({ wins });
+      // Update losses
       losses = snapshot.child('players/1').val().losses + 1;
       gameRef.child('players/1').update({ losses });
-      $('#player-two-wins').text(wins);
-      $('#player-one-losses').text(losses);
     } else {
       $('#status h2').text('Tie!');
       setTimeout(() => $('#status h2').text(''), 3000);
     }
-    // Reset turn value
-    gameRef.update({ turn: 1 });
+    updateGameState();
     // Reset selection CSS
-    $('.choices p').each(function resetChoiceStyle() {
+    $('.choice').each(function resetChoiceStyle() {
       $(this).css('color', 'black');
     });
+    // Reset turn value
+    gameRef.update({ turn: 1 });
   }
 });
 
@@ -131,30 +145,19 @@ $('#player-submit').click((e) => {
   gameRef.once('value', (snapshot) => {
     const numPlayers = snapshot.child('players').numChildren();
     if (numPlayers === 0) {
-      gameRef.child('players').update({
-        1: {
-          name: playerName,
-          wins: 0,
-          losses: 0,
-        },
-      });
       game.currentPlayer = 1;
-      game.currentUserRef = gameRef.child('players/1');
       $('#player-one .choices').show();
-      $('#player-one .stats').show();
     } else if (numPlayers === 1) {
-      gameRef.child('players').update({
-        2: {
-          name: playerName,
-          wins: 0,
-          losses: 0,
-        },
-      });
       game.currentPlayer = 2;
-      game.currentUserRef = gameRef.child('players/2');
       $('#player-two .choices').show();
-      $('#player-two .stats').show();
     }
+  });
+  // Update database with selection
+  game.currentUserRef = gameRef.child(`players/${game.currentPlayer}`);
+  gameRef.child(`players/${game.currentPlayer}`).update({
+    name: playerName,
+    wins: 0,
+    losses: 0,
   });
   // Set player's name in local state - used when submitting chat messages
   game.playerName = playerName;
@@ -165,16 +168,11 @@ $('#player-submit').click((e) => {
 // Handle a player's selection
 $('.choices p').click(function handleChoice() {
   const choice = $(this).data('choice');
+  gameRef.child(`players/${game.currentPlayer}`).update({ choice });
+  // Update choice style
+  $(this).css('color', 'red');
+  // Increment turn in database
   gameRef.once('value', (snapshot) => {
-    if (game.currentPlayer === 1) {
-      gameRef.child('players/1').update({ choice });
-    } else if (game.currentPlayer === 2) {
-      gameRef.child('players/2').update({ choice });
-    }
-
-    // Update choice style
-    $(this).css('color', 'red');
-    // Increment turn in database
     gameRef.update({ turn: snapshot.val().turn + 1 });
   });
 });
