@@ -53,7 +53,20 @@ header {
 // Chat panel
 #right-panel {
   width: 25%;
-  height: 100%;
+  background: rgb(201, 201, 201);
+  padding: 20px;
+  div#chat {
+    position: relative;
+    height: 100%;
+  }
+  form#chat-form {
+    position: absolute;
+    bottom: 0px;
+  }
+  div#chat-messages {
+    padding: 10px;
+    overflow: scroll;
+  }
   div.chat-message {
     border-top: 1px dotted rgb(230, 230, 230);
     padding-top: 3px;

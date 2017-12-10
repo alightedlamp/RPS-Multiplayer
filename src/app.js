@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import moment from 'moment';
 import config from './js/config';
 
 firebase.initializeApp(config);
@@ -25,7 +26,7 @@ class Game {
 // Initialize game
 const game = new Game();
 
-// Handle connections -- NOT WORKING
+// Handle connections - NOT WORKING
 connectedRef.on('value', (snapshot) => {
   if (snapshot.val() && game.currentUserRef) {
     game.currentUserRef.onDisconnect().remove();
@@ -71,32 +72,32 @@ gameRef.on('value', (snapshot) => {
     // Reset player choices
     gameRef.child('players/1/choice').remove();
     gameRef.child('players/2/choice').remove();
-    // Update wins and losses - how can this be cleaned up?
-    let wins;
-    let losses;
+    // Update wins and losses
+    let winner;
+    let loser;
     if (result === 'win') {
-      // Update wins
-      wins = snapshot.child('players/1').val().wins + 1;
-      gameRef.child('players/1').update({ wins });
-      // Update losses
-      losses = snapshot.child('players/2').val().losses + 1;
-      gameRef.child('players/2').update({ losses });
+      winner = 1;
+      loser = 2;
     } else if (result === 'lose') {
-      // Update wins
-      wins = snapshot.child('players/2').val().wins + 1;
-      gameRef.child('players/2').update({ wins });
-      // Update losses
-      losses = snapshot.child('players/1').val().losses + 1;
-      gameRef.child('players/1').update({ losses });
+      winner = 2;
+      loser = 1;
+    }
+    if (result === 'win' || result === 'lose') {
+      // Update wins and losses
+      const wins = snapshot.child(`players/${winner}`).val().wins + 1;
+      const losses = snapshot.child(`players/${loser}`).val().losses + 1;
+      gameRef.child(`players/${winner}`).update({ wins });
+      gameRef.child(`players/${loser}`).update({ losses });
+      // Update DOM
+      updateGameState();
+      // Reset selection CSS - NOT WORKING
+      $('.choice').each(function resetChoiceStyle() {
+        $(this).css('color', 'black');
+      });
     } else {
       $('#status h2').text('Tie!');
       setTimeout(() => $('#status h2').text(''), 3000);
     }
-    updateGameState();
-    // Reset selection CSS
-    $('.choice').each(function resetChoiceStyle() {
-      $(this).css('color', 'black');
-    });
     // Reset turn value
     gameRef.update({ turn: 1 });
   }
@@ -117,6 +118,7 @@ commentsRef.on('child_added', (snapshot) => {
   // Append message to chat log
   $('#chat-messages').append(`
     <div class="chat-message">
+      <p class="timestamp">${moment().format('h:mm:ss A')}</p>
       <p><strong>${snapshot.val().name}</strong>: ${snapshot.val().message}</p>
     </div>
   `);
@@ -151,18 +153,20 @@ $('#player-submit').click((e) => {
       game.currentPlayer = 2;
       $('#player-two .choices').show();
     }
-  });
-  // Update database with selection
-  game.currentUserRef = gameRef.child(`players/${game.currentPlayer}`);
-  gameRef.child(`players/${game.currentPlayer}`).update({
-    name: playerName,
-    wins: 0,
-    losses: 0,
+    // Update database with selection
+    game.currentUserRef = gameRef.child(`players/${game.currentPlayer}`);
+    gameRef.child(`players/${game.currentPlayer}`).update({
+      name: playerName,
+      wins: 0,
+      losses: 0,
+    });
   });
   // Set player's name in local state - used when submitting chat messages
   game.playerName = playerName;
   // Hide the form after submitted
   $('#player-submit-form').hide();
+  // Enable chat functionality
+  $('#chat-submit').prop('disabled', false);
 });
 
 // Handle a player's selection
