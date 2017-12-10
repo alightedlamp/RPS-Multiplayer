@@ -11,11 +11,13 @@ const commentsRef = database.ref('/game/chat');
 
 class Game {
   constructor() {
-    this.choices = ['r', 'p', 's'];
+    this.choices = ['r', 'p', 's', 'l', 'sp'];
     this.results = [
-      ['tie', 'win', 'lose'],
-      ['lose', 'tie', 'win'],
-      ['win', 'lose', 'tie'],
+      ['tie', 'win', 'lose', 'win', 'win'],
+      ['lose', 'tie', 'win', 'win', 'lose'],
+      ['win', 'lose', 'tie', 'lose', 'win'],
+      ['win', 'lose', 'win', 'tie', 'win'],
+      ['lost', 'win', 'lose', 'lose', 'tie'],
     ];
     this.playerName = '';
     this.currentPlayer = 0;
@@ -76,7 +78,7 @@ gameRef.on('value', (snapshot) => {
     // Add player two
     if (snapshot.child('players/2').exists()) {
       $('#player-two h3').text(snapshot.child('players/2').val().name);
-      $('#player-submit-form').hide();
+      $('#player-selection').hide();
       // Add turn value to indicate game has begun
       gameRef.update({ turn: 1 });
       // Show player two score
@@ -166,7 +168,7 @@ $('#player-submit').click((e) => {
   // Add user to database
   game.addPlayer(playerName);
   // Hide the form after submitted
-  $('#player-submit-form').hide();
+  $('#player-selection').hide();
   // Enable chat functionality
   $('#chat-submit').prop('disabled', false);
 });

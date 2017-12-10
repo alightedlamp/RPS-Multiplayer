@@ -10,7 +10,7 @@
 <body>
   <div id="app">
     <header>
-      <h1>Rock Paper Scissors</h1>
+      <h1>Rock Paper Scissors Lizard Spock</h1>
     </header>
     <section id="status">
       <h2></h2>
@@ -32,6 +32,8 @@
             <p class="choice" data-choice="r">Rock</p>
             <p class="choice" data-choice="p">Paper</p>
             <p class="choice" data-choice="s">Scissors</p>
+            <p class="choice" data-choice="l">Lizard</p>
+            <p class="choice" data-choice="sp">Spock</p>
           </div>
           <div class="stats" style="display:none">
             <p>Wins: <span id="player-one-wins"></span></p>
@@ -47,6 +49,8 @@
             <p class="choice" data-choice="r">Rock</p>
             <p class="choice" data-choice="p">Paper</p>
             <p class="choice" data-choice="s">Scissors</p>
+            <p class="choice" data-choice="l">Lizard</p>
+            <p class="choice" data-choice="sp">Spock</p>
           </div>
           <div class="stats" style="display:none">
               <p>Wins: <span id="player-two-wins"></span></p>
@@ -54,20 +58,17 @@
           </div>
         </div>
       </div>
-      <div id="right-panel">
-        <div id="chat">
-          <h2>Chat</h2>
-          <div id="chat-messages">
-
-          </div>
-          <div id="chat-input">
-            <form id="chat-form">
-              <input type="text" id="chat-msg" />
-              <button id="chat-submit" disabled>Send</button>
-            </form>
-          </div>
-        </div>
+    </section>
+    <section id="chat">
+      <div class="toggle">
+        <span id="chat-toggle">x</span>
       </div>
+      <h2>Chat</h2>
+      <div id="chat-messages"></div>
+      <form id="chat-form">
+        <input type="text" id="chat-msg" />
+        <button id="chat-submit" disabled>Send</button>
+      </form>
     </section>
   </div>
   
