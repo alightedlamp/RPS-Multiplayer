@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rock Paper Scissors Multiplayer</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1>Rock Paper Scissors</h1>
+    </header>
+    <section id="status">
+      <h2></h2>
+    </section>
+    <section id="player-selection">
+      <form id="player-submit-form">
+        <input type="text" id="name" />
+        <button id="player-submit">Submit</button>
+      </form>
+    </section>
+    <section id="game">
+      <div id="left-panel">
+        <div id="player-one">
+          <h3>Waiting for player one...</h3>
+          <div class="status">
+            <p id="player-one-status"></p>
+          </div>
+          <div class="choices" style="display:none">
+            <p data-choice="r">Rock</p>
+            <p data-choice="p">Paper</p>
+            <p data-choice="s">Scissors</p>
+          </div>
+          <div class="stats" style="display:none">
+            <p>Wins: <span id="player-one-wins"></span></p>
+            <p>Losses: <span id="player-one-losses"></span></p>
+          </div>
+        </div>
+        <div id="player-two">
+          <h3>Waiting for player two...</h3>
+          <div class="status">
+            <p id="player-two-status"></p>
+          </div>
+          <div class="choices" style="display:none">
+            <p data-choice="r">Rock</p>
+            <p data-choice="p">Paper</p>
+            <p data-choice="s">Scissors</p>
+          </div>
+          <div class="stats" style="display:none">
+              <p>Wins: <span id="player-two-wins"></span></p>
+              <p>Losses: <span id="player-two-losses"></span></p>  
+          </div>
+        </div>
+      </div>
+      <div id="right-panel">
+        <div id="chat">
+          <h2>Chat</h2>
+          <div id="chat-messages">
+
+          </div>
+          <div id="chat-input">
+            <form id="chat-form">
+              <input type="text" id="chat-msg" />
+              <button id="chat-submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

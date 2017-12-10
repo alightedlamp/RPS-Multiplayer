@@ -1,0 +1,62 @@
+@import 'reset.css';
+
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.75em;
+}
+h3 {
+  font-size: 1.25em;
+}
+header {
+  margin: 20px;
+}
+
+#app {
+  margin: 20px;
+}
+#game {
+  display: flex;
+  justify-content: space-around;
+}
+#player-selection {
+  margin: 20px;
+}
+// Main game panel
+#left-panel {
+  width: 75%;
+  display: flex;
+  justify-content: space-around;
+  div#player-one,
+  div#player-two {
+    position: relative;
+    height: 200px;
+    width: 50%;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid black;
+  }
+  div.choices,
+  div.stats {
+    display: flex;
+    justify-content: space-between;
+  }
+  div.choices {
+    margin: 20px 0;
+  }
+  div.stats {
+    position: absolute;
+    bottom: 20px;
+  }
+}
+// Chat panel
+#right-panel {
+  width: 25%;
+  height: 100%;
+  div.chat-message {
+    border-top: 1px dotted rgb(230, 230, 230);
+    padding-top: 3px;
+    margin-top: 7px;
+  }
+}
