@@ -21,6 +21,26 @@ class Game {
     this.currentPlayer = 0;
     this.currentUserRef = '';
   }
+  addPlayer(playerName) {
+    gameRef.once('value', (snapshot) => {
+      const numPlayers = snapshot.child('players').numChildren();
+      if (numPlayers === 0) {
+        this.currentPlayer = 1;
+        $('#player-one .choices').show();
+      } else if (numPlayers === 1) {
+        this.currentPlayer = 2;
+        $('#player-two .choices').show();
+      }
+      // Update database with selection
+      this.playerName = playerName;
+      this.currentUserRef = gameRef.child(`players/${this.currentPlayer}`);
+      gameRef.child(`players/${this.currentPlayer}`).update({
+        name: playerName,
+        wins: 0,
+        losses: 0,
+      });
+    });
+  }
 }
 
 // Initialize game
@@ -33,7 +53,7 @@ connectedRef.on('value', (snapshot) => {
   }
 });
 
-const updateGameState = function updateGameStateDisplay() {
+const updateScore = function updateScoreInDOM() {
   gameRef.once('value', (snapshot) => {
     $('#player-one-wins').text(snapshot.child('players/1').val().wins);
     $('#player-two-wins').text(snapshot.child('players/2').val().wins);
@@ -89,15 +109,15 @@ gameRef.on('value', (snapshot) => {
       gameRef.child(`players/${winner}`).update({ wins });
       gameRef.child(`players/${loser}`).update({ losses });
       // Update DOM
-      updateGameState();
-      // Reset selection CSS - NOT WORKING
-      $('.choice').each(function resetChoiceStyle() {
-        $(this).css('color', 'black');
-      });
+      updateScore();
     } else {
       $('#status h2').text('Tie!');
       setTimeout(() => $('#status h2').text(''), 3000);
     }
+    // Reset selection CSS - NOT WORKING
+    $('.choice').each(function resetChoiceStyle() {
+      $(this).css('color', 'black');
+    });
     // Reset turn value
     gameRef.update({ turn: 1 });
   }
@@ -108,9 +128,9 @@ gameRef.child('players').on('child_removed', (snapshot) => {
   const removedName = snapshot.val().name;
   $(`h3:contains(${removedName})`).empty();
   // Log user left in chat
-  $('#chat-messages').append(`<p class="log">${removedName} left</p>`);
-  // Clear player's stats box
+  $('#chat-messages').append(`<p class="log">${removedName} left at ${moment().format('h:mm:ss A')}</p>`);
   // Update game state
+  updateScore();
 });
 
 // Handle adding a new comment
@@ -144,25 +164,7 @@ $('#player-submit').click((e) => {
     .val()
     .trim();
   // Add user to database
-  gameRef.once('value', (snapshot) => {
-    const numPlayers = snapshot.child('players').numChildren();
-    if (numPlayers === 0) {
-      game.currentPlayer = 1;
-      $('#player-one .choices').show();
-    } else if (numPlayers === 1) {
-      game.currentPlayer = 2;
-      $('#player-two .choices').show();
-    }
-    // Update database with selection
-    game.currentUserRef = gameRef.child(`players/${game.currentPlayer}`);
-    gameRef.child(`players/${game.currentPlayer}`).update({
-      name: playerName,
-      wins: 0,
-      losses: 0,
-    });
-  });
-  // Set player's name in local state - used when submitting chat messages
-  game.playerName = playerName;
+  game.addPlayer(playerName);
   // Hide the form after submitted
   $('#player-submit-form').hide();
   // Enable chat functionality
