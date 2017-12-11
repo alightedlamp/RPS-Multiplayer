@@ -4,9 +4,11 @@
   box-sizing: border-box;
 }
 
-html, body {
-  background: rgb(19, 19, 19);
+html,
+body {
+  background: rgb(54, 54, 54);
   color: rgb(236, 236, 236);
+  font-family: 'Roboto', sans-serif;
 }
 h1 {
   font-size: 2em;
@@ -18,12 +20,16 @@ h3 {
   font-size: 1.25em;
 }
 header {
-  margin: 20px;
+  padding: 20px;
   z-index: 3;
+  background: blue;
+}
+strong {
+  font-weight: bold;
 }
 
 #app {
-  margin: 20px;
+  // padding: 20px;
 }
 #game {
   display: flex;
@@ -38,16 +44,30 @@ header {
   z-index: 2;
   background-color: blue;
   padding: 20px;
+  div.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 150px;
+    margin: -75px 0 0 -200px;
+  }
+  h3 {
+    font-size: 3em;
+  }
+  input {
+    color: white;
+  }
 }
 // Main game panel
 #left-panel {
-  width: 75%;
   display: flex;
   justify-content: space-around;
+  width: 100%;
   div#player-one,
   div#player-two {
     position: relative;
-    height: 200px;
+    height: 250px;
     width: 50%;
     margin: 20px;
     padding: 20px;
@@ -60,29 +80,47 @@ header {
   }
   div.choices {
     margin: 20px 0;
+    p {
+      padding: 10px;
+      background: white;
+      color: black;
+      &:hover {
+        color: white;
+        background: blue;
+      }
+    }
   }
   div.stats {
     position: absolute;
+    padding-right: 40px;
+    width: 100%;
     bottom: 20px;
+    font-size: 1.25em;
   }
 }
 // Chat panel
 section#chat {
   position: absolute;
-  top: 0;
   right: 0;
-  width: 200px;
-  height: 100%;
+  width: 250px;
   background: rgb(201, 201, 201);
   color: black;
   padding: 20px;
-  span#chat-toggle {
+  div.toggle {
     position: absolute;
-    right: 0;
+    display: block;
+    width: 100%;
     top: 0;
+    right: 0;
+    height: 75px;
+  }
+  span#chat-toggle {
     margin: 20px;
     font-size: 2em;
     cursor: pointer;
+  }
+  div.chat-window {
+    margin-top: 20px;
   }
   form#chat-form {
     position: absolute;
@@ -91,17 +129,63 @@ section#chat {
     margin-bottom: 20px;
   }
   input#chat-msg {
-    width: 100px;
-  }
-  button#chat-submit {
+    width: 150px;
   }
   div#chat-messages {
     padding: 10px;
-    overflow: scroll;
+    // overflow: scroll;
   }
   div.chat-message {
     border-top: 1px dotted rgb(230, 230, 230);
-    padding-top: 3px;
+    padding-top: 5px;
     margin-top: 7px;
   }
+  .timestamp {
+    font-size: .8em;
+  }
+  .message,
+  .log {
+    font-size: .95em;
+    margin-top: 5px;
+  }
+  &.active {
+    height: 100%;
+    top: 0;
+    .chat-window {
+      display: block;
+    }
+  }
+  &.minimized {
+    height: auto;
+    bottom: 0;
+    .chat-window {
+      display: none;
+    }
+  }
+}
+
+/* COMPONENTS */
+.form-group {
+  margin: 20px 0;
+  display: flex;
+}
+.form-group input,
+.form-gropu button {
+  padding: 10px;
+}
+.form-group input {
+  width: 100%;
+  border: 0;
+  font-size: 0.9em;
+  background: none;
+  border-bottom: 2px solid white;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid green;
+  }
+}
+.btn {
+  border-radius: 0;
+  border: 0;
+  font-size: 0.9em;
 }

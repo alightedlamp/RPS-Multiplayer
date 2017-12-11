@@ -64,6 +64,15 @@ const updateScore = function updateScoreInDOM() {
   });
 };
 
+const resetStatus = function resetStatusInDOM() {
+  // Reset selection CSS - NOT WORKING
+  // $('.choice').each(function resetChoiceStyle() {
+  //   $(this).css('color', 'black');
+  // });
+  $('#player-one-status').empty();
+  $('#player-two-status').empty();
+};
+
 // Handle changes when the game starts or database state changes
 gameRef.on('value', (snapshot) => {
   // Determine if a turn value exists. If not, game hasn't begun yet.
@@ -85,8 +94,24 @@ gameRef.on('value', (snapshot) => {
       $('#player-two .stats').show();
     }
   }
+  if (
+    game.currentPlayer === 2 &&
+    snapshot.child('players/1/choice').exists() &&
+    !snapshot.child('players/2/choice').exists()
+  ) {
+    $('#player-one-status').text('Player one has made their choice!');
+  } else if (
+    game.currentPlayer === 1 &&
+    !snapshot.child('players/1/choice').exists() &&
+    snapshot.child('players/2/choice').exists()
+  ) {
+    $('#player-two-status').text('Player two has made their choice!');
+  }
   // If both players have made a choice, compute the result
-  if (snapshot.child('players/1/choice').exists() && snapshot.child('players/2/choice').exists()) {
+  if (
+    snapshot.child('players/1/choice').exists() &&
+    snapshot.child('players/2/choice').exists()
+  ) {
     const playerOneChoiceIdx = game.choices.indexOf(snapshot.child('players/1').val().choice);
     const playerTwoChoiceIdx = game.choices.indexOf(snapshot.child('players/2').val().choice);
     // Compute player one's result
@@ -116,10 +141,7 @@ gameRef.on('value', (snapshot) => {
       $('#status h2').text('Tie!');
       setTimeout(() => $('#status h2').text(''), 3000);
     }
-    // Reset selection CSS - NOT WORKING
-    $('.choice').each(function resetChoiceStyle() {
-      $(this).css('color', 'black');
-    });
+    resetStatus();
     // Reset turn value
     gameRef.update({ turn: 1 });
   }
@@ -132,7 +154,7 @@ gameRef.child('players').on('child_removed', (snapshot) => {
   // Log user left in chat
   $('#chat-messages').append(`<p class="log">${removedName} left at ${moment().format('h:mm:ss A')}</p>`);
   // Update game state
-  updateScore();
+  // updateScore();
 });
 
 // Handle adding a new comment
@@ -141,14 +163,17 @@ commentsRef.on('child_added', (snapshot) => {
   $('#chat-messages').append(`
     <div class="chat-message">
       <p class="timestamp">${moment().format('h:mm:ss A')}</p>
-      <p><strong>${snapshot.val().name}</strong>: ${snapshot.val().message}</p>
+      <p class="message"><strong>${snapshot.val().name}</strong>: ${snapshot.val().message}</p>
     </div>
   `);
+  // If this chat window is minimized, indicate to user that there is a new message
 });
 
 $('#chat-submit').click((e) => {
   e.preventDefault();
-  const message = $('#chat-msg').val().trim();
+  const message = $('#chat-msg')
+    .val()
+    .trim();
   // Only add a message if it is longer than 0 chars
   if (message) {
     gameRef.child('chat').push({
@@ -157,6 +182,13 @@ $('#chat-submit').click((e) => {
     });
     $('#chat-msg').val('');
   }
+});
+
+$('.toggle').click((e) => {
+  e.preventDefault();
+  $('#chat')
+    .toggleClass('active')
+    .toggleClass('minimized');
 });
 
 // Handle assigning players to database
@@ -178,7 +210,7 @@ $('.choices p').click(function handleChoice() {
   const choice = $(this).data('choice');
   gameRef.child(`players/${game.currentPlayer}`).update({ choice });
   // Update choice style
-  $(this).css('color', 'red');
+  // $(this).css('color', 'red');
   // Increment turn in database
   gameRef.once('value', (snapshot) => {
     gameRef.update({ turn: snapshot.val().turn + 1 });

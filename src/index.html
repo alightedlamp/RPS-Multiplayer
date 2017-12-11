@@ -4,6 +4,7 @@
 <head>
   <title>Rock Paper Scissors Multiplayer</title>
   <meta charset="UTF-8" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 
@@ -16,10 +17,13 @@
       <h2></h2>
     </section>
     <section id="player-selection">
-      <form id="player-submit-form">
-        <input type="text" id="name" />
-        <button id="player-submit">Submit</button>
-      </form>
+      <div class="container">
+        <h3>Who are you?</h3>
+        <form id="player-submit-form" class="form-group">
+          <input type="text" id="name" />
+          <button id="player-submit" class="btn">Submit</button>
+        </form>
+      </div>
     </section>
     <section id="game">
       <div id="left-panel">
@@ -59,16 +63,18 @@
         </div>
       </div>
     </section>
-    <section id="chat">
+    <section id="chat" class="minimized">
       <div class="toggle">
         <span id="chat-toggle">x</span>
       </div>
-      <h2>Chat</h2>
-      <div id="chat-messages"></div>
-      <form id="chat-form">
-        <input type="text" id="chat-msg" />
-        <button id="chat-submit" disabled>Send</button>
-      </form>
+      <div class="chat-window">
+        <h2>Chat</h2>
+        <div id="chat-messages"></div>
+        <form id="chat-form" class="form-group">
+          <input type="text" id="chat-msg" />
+          <button id="chat-submit" class="btn" disabled>Send</button>
+        </form>
+      </div>
     </section>
   </div>
   
