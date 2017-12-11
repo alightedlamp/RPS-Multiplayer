@@ -125,9 +125,13 @@ gameRef.on('value', (snapshot) => {
     if (result === 'win') {
       winner = 1;
       loser = 2;
+      $('#status h2').text(`${snapshot.child('players/1').val().name} wins!`);
+      setTimeout(() => $('#status h2').text(''), 3000);
     } else if (result === 'lose') {
       winner = 2;
       loser = 1;
+      $('#status h2').text(`${snapshot.child('players/2').val().name} wins!`);
+      setTimeout(() => $('#status h2').text(''), 3000);
     }
     if (result === 'win' || result === 'lose') {
       // Update wins and losses
@@ -206,7 +210,8 @@ $('#player-submit').click((e) => {
 });
 
 // Handle a player's selection
-$('.choices p').click(function handleChoice() {
+$('.choice').click(function handleChoice(e) {
+  e.preventDefault();
   const choice = $(this).data('choice');
   gameRef.child(`players/${game.currentPlayer}`).update({ choice });
   // Update choice style
