@@ -10,6 +10,13 @@ const commentsRef = database.ref('/game/chat');
 class Game {
   constructor() {
     this.choices = ['r', 'p', 's', 'l', 'sp'];
+    this.choicesMap = {
+      r: 'Rock',
+      p: 'Paper',
+      s: 'Scissors',
+      l: 'Lizard',
+      sp: 'Spock',
+    };
     this.results = [
       ['tie', 'win', 'lose', 'win', 'win'],
       ['lose', 'tie', 'win', 'win', 'lose'],
@@ -62,9 +69,29 @@ const updateScore = function updateScoreInDOM() {
   });
 };
 
+const showWinner = function showWinner(winner, playerOneChoice, playerTwoChoice) {
+  gameRef.once('value', (snapshot) => {
+    $('#status h2').text(`${snapshot.child(`players/${winner}`).val().name} wins!`);
+    $('.choices').hide();
+    $('#player-one-status').text(`${game.choicesMap[playerOneChoice]}`);
+    $('#player-two-status').text(`${game.choicesMap[playerTwoChoice]}`);
+    setTimeout(() => {
+      $('#status h2').empty();
+      $('#player-one-status').empty();
+      $('#player-two-status').empty();
+      if (game.currentPlayer === 1) {
+        $('#player-one .choices').show();
+      } else if (game.currentPlayer === 2) {
+        $('#player-two .choices').show();
+      }
+    }, 3000);
+  });
+};
+
 const resetStatus = function resetStatusInDOM() {
-  $('#player-one-status').empty();
-  $('#player-two-status').empty();
+  $('.choice').each(function resetIconFillColor() {
+    $(this).removeClass('active');
+  });
 };
 
 // Handle changes when the game starts or database state changes
@@ -106,8 +133,10 @@ gameRef.on('value', (snapshot) => {
     snapshot.child('players/1/choice').exists() &&
     snapshot.child('players/2/choice').exists()
   ) {
-    const playerOneChoiceIdx = game.choices.indexOf(snapshot.child('players/1').val().choice,);
-    const playerTwoChoiceIdx = game.choices.indexOf(snapshot.child('players/2').val().choice,);
+    const playerOneChoice = snapshot.child('players/1').val().choice;
+    const playerTwoChoice = snapshot.child('players/2').val().choice;
+    const playerOneChoiceIdx = game.choices.indexOf(playerOneChoice, 0);
+    const playerTwoChoiceIdx = game.choices.indexOf(playerTwoChoice, 0);
     // Compute player one's result
     const result = game.results[playerTwoChoiceIdx][playerOneChoiceIdx];
     // Reset player choices
@@ -119,13 +148,9 @@ gameRef.on('value', (snapshot) => {
     if (result === 'win') {
       winner = 1;
       loser = 2;
-      $('#status h2').text(`${snapshot.child('players/1').val().name} wins!`);
-      setTimeout(() => $('#status h2').text(''), 3000);
     } else if (result === 'lose') {
       winner = 2;
       loser = 1;
-      $('#status h2').text(`${snapshot.child('players/2').val().name} wins!`);
-      setTimeout(() => $('#status h2').text(''), 3000);
     }
     if (result === 'win' || result === 'lose') {
       // Update wins and losses
@@ -133,6 +158,8 @@ gameRef.on('value', (snapshot) => {
       const losses = snapshot.child(`players/${loser}`).val().losses + 1;
       gameRef.child(`players/${winner}`).update({ wins });
       gameRef.child(`players/${loser}`).update({ losses });
+      // Show winner
+      showWinner(winner, playerOneChoice, playerTwoChoice);
       // Update DOM
       updateScore();
     } else {
@@ -161,12 +188,10 @@ commentsRef.on('child_added', (snapshot) => {
   $('#chat-messages').append(`
     <div class="chat-message">
       <p class="timestamp">${moment().format('h:mm:ss A')}</p>
-      <p class="message"><strong>${snapshot.val().name}</strong>: ${
-  snapshot.val().message
-}</p>
+      <p class="message"><strong>${snapshot.val().name}</strong>: ${snapshot.val().message}</p>
     </div>
   `);
-  // If this chat window is minimized, indicate to user that there is a new message
+  // If the chat window is minimized, indicate to user that there is a new message
 });
 
 $('#chat-submit').click((e) => {
@@ -220,6 +245,8 @@ $('.choice').click(function handleChoice(e) {
           !snapshot.child('players/2/choice').exists())
       ) {
         const choice = $(this).data('choice');
+        // Change color of user's selection
+        $(this).addClass('active');
         gameRef.child(`players/${game.currentPlayer}`).update({ choice });
         // Increment turn in database
         gameRef.update({ turn: snapshot.val().turn + 1 });
