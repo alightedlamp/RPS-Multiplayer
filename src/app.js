@@ -4,7 +4,6 @@ firebase.initializeApp(config);
 const database = firebase.database();
 
 const gameRef = database.ref('/game');
-const connectedRef = database.ref('.info/connected');
 const commentsRef = database.ref('/game/chat');
 
 class Game {
@@ -95,8 +94,8 @@ const showWinner = function showWinnerInDOM(winner, playerOneChoice, playerTwoCh
 const determineWinner = function determineWinner(snapshot) {
   const playerOneChoice = snapshot.child('players/1').val().choice;
   const playerTwoChoice = snapshot.child('players/2').val().choice;
-  const playerOneChoiceIdx = game.choices.indexOf(playerOneChoice, 0);
-  const playerTwoChoiceIdx = game.choices.indexOf(playerTwoChoice, 0);
+  const playerOneChoiceIdx = game.choices.indexOf(snapshot.child('players/1').val().choice, 0);
+  const playerTwoChoiceIdx = game.choices.indexOf(snapshot.child('players/2').val().choice, 0);
   // Compute player one's result
   const result = game.results[playerTwoChoiceIdx][playerOneChoiceIdx];
   // Reset player choices
@@ -184,9 +183,19 @@ gameRef.child('players').on('child_removed', (snapshot) => {
   const removedName = snapshot.val().name;
   $(`h3:contains(${removedName})`).empty();
   // Log user left in chat
-  $('#chat-messages').append(`<p class="log">${removedName} left at ${moment().format('h:mm:ss A')}</p>`,);
-  // Update game state
-  // updateScore();
+  $('#chat-messages').append(`<p class="log">${removedName} left at ${moment().format('h:mm:ss A')}</p>`);
+  // Remove turn value in db
+  gameRef.child('turn').remove();
+  // Reset appropriate player's info in DOM
+  if (game.currentPlayer === 1) {
+    $('#player-two h3').text('Waiting for player two...');
+    $('#player-two-wins').empty();
+    $('#player-two-losses').empty();
+  } else {
+    $('#player-one h3').text('Waiting for player one...');
+    $('#player-one-wins').empty();
+    $('#player-one-losses').empty();
+  }
 });
 
 // Handle adding a new comment
@@ -254,6 +263,7 @@ $('.choice').click(function handleChoice(e) {
         const choice = $(this).data('choice');
         // Change color of user's selection
         $(this).addClass('active');
+        // Add current player's choice to database
         gameRef.child(`players/${game.currentPlayer}`).update({ choice });
         // Increment turn in database
         gameRef.update({ turn: snapshot.val().turn + 1 });
