@@ -26,7 +26,6 @@ class Game {
     ];
     this.playerName = '';
     this.currentPlayer = 0;
-    this.currentUserRef = '';
   }
   addPlayer(playerName) {
     gameRef.once('value', (snapshot) => {
@@ -40,25 +39,33 @@ class Game {
       }
       // Update database with selection
       this.playerName = playerName;
-      this.currentUserRef = gameRef.child(`players/${this.currentPlayer}`);
       gameRef.child(`players/${this.currentPlayer}`).update({
         name: playerName,
         wins: 0,
         losses: 0,
       });
     });
+    gameRef.child(`players/${this.currentPlayer}`).onDisconnect().remove();
   }
 }
 
 // Initialize game
 const game = new Game();
 
-// Handle connections - NOT WORKING
-connectedRef.on('value', (snapshot) => {
-  if (snapshot.val() && game.currentUserRef) {
-    game.currentUserRef.onDisconnect().remove();
-  }
-});
+const addPlayerOne = function addPlayerOneInDOM(snapshot) {
+  $('#player-one h3').text(snapshot.child('players/1').val().name);
+  // Show player one score
+  $('#player-one .stats').show();
+};
+
+const addPlayerTwo = function addPlayerOneInDOM(snapshot) {
+  $('#player-two h3').text(snapshot.child('players/2').val().name);
+  $('#player-selection').hide();
+  // Add turn value to indicate game has begun
+  gameRef.update({ turn: 1 });
+  // Show player two score
+  $('#player-two .stats').show();
+};
 
 const updateScore = function updateScoreInDOM() {
   gameRef.once('value', (snapshot) => {
@@ -69,16 +76,13 @@ const updateScore = function updateScoreInDOM() {
   });
 };
 
-const showWinner = function showWinner(winner, playerOneChoice, playerTwoChoice) {
+const showWinner = function showWinnerInDOM(winner, playerOneChoice, playerTwoChoice) {
   gameRef.once('value', (snapshot) => {
     $('#status h2').text(`${snapshot.child(`players/${winner}`).val().name} wins!`);
     $('.choices').hide();
     $('#player-one-status').text(`${game.choicesMap[playerOneChoice]}`);
     $('#player-two-status').text(`${game.choicesMap[playerTwoChoice]}`);
     setTimeout(() => {
-      $('#status h2').empty();
-      $('#player-one-status').empty();
-      $('#player-two-status').empty();
       if (game.currentPlayer === 1) {
         $('#player-one .choices').show();
       } else if (game.currentPlayer === 2) {
@@ -88,33 +92,42 @@ const showWinner = function showWinner(winner, playerOneChoice, playerTwoChoice)
   });
 };
 
-const resetStatus = function resetStatusInDOM() {
-  $('.choice').each(function resetIconFillColor() {
-    $(this).removeClass('active');
-  });
+const determineWinner = function determineWinner(snapshot) {
+  const playerOneChoice = snapshot.child('players/1').val().choice;
+  const playerTwoChoice = snapshot.child('players/2').val().choice;
+  const playerOneChoiceIdx = game.choices.indexOf(playerOneChoice, 0);
+  const playerTwoChoiceIdx = game.choices.indexOf(playerTwoChoice, 0);
+  // Compute player one's result
+  const result = game.results[playerTwoChoiceIdx][playerOneChoiceIdx];
+  // Reset player choices
+  gameRef.child('players/1/choice').remove();
+  gameRef.child('players/2/choice').remove();
+  // Update wins and losses
+  let winner;
+  let loser;
+  if (result === 'win') {
+    winner = 1;
+    loser = 2;
+  } else if (result === 'lose') {
+    winner = 2;
+    loser = 1;
+  }
+  if (result === 'win' || result === 'lose') {
+    // Update wins and losses
+    const wins = snapshot.child(`players/${winner}`).val().wins + 1;
+    const losses = snapshot.child(`players/${loser}`).val().losses + 1;
+    gameRef.child(`players/${winner}`).update({ wins });
+    gameRef.child(`players/${loser}`).update({ losses });
+    // Show winner
+    showWinner(winner, playerOneChoice, playerTwoChoice);
+    // Update DOM
+    updateScore();
+  } else {
+    $('#status h2').text('Tie!');
+  }
 };
 
-// Handle changes when the game starts or database state changes
-gameRef.on('value', (snapshot) => {
-  // Determine if a turn value exists. If not, game hasn't begun yet.
-  if (!snapshot.child('turn').exists()) {
-    // Add player one
-    if (snapshot.child('players/1').exists()) {
-      $('#player-one h3').text(snapshot.child('players/1').val().name);
-      // Show player one score
-      $('#player-one .stats').show();
-    }
-
-    // Add player two
-    if (snapshot.child('players/2').exists()) {
-      $('#player-two h3').text(snapshot.child('players/2').val().name);
-      $('#player-selection').hide();
-      // Add turn value to indicate game has begun
-      gameRef.update({ turn: 1 });
-      // Show player two score
-      $('#player-two .stats').show();
-    }
-  }
+const updateStatus = function updateStatusInDOM(snapshot) {
   if (
     game.currentPlayer === 2 &&
     snapshot.child('players/1/choice').exists() &&
@@ -128,44 +141,38 @@ gameRef.on('value', (snapshot) => {
   ) {
     $('#player-two-status').text('Player two has made their choice!');
   }
+};
+
+const resetStatus = function resetStatusInDOM() {
+  setTimeout(() => {
+    $('#status h2').text('');
+    $('#player-one-status').empty();
+    $('#player-two-status').empty();
+    $('.choice').each(function resetIconFillColor() {
+      $(this).removeClass('active');
+    });
+  }, 3000);
+};
+
+// Handle changes when the game starts or database state changes
+gameRef.on('value', (snapshot) => {
+  // Determine if a turn value exists. If not, game hasn't begun yet.
+  if (!snapshot.child('turn').exists()) {
+    if (snapshot.child('players/1').exists()) {
+      addPlayerOne(snapshot);
+    }
+    if (snapshot.child('players/2').exists()) {
+      addPlayerTwo(snapshot);
+    }
+  }
+  // Check if one player has made a choice but still waiting on another
+  updateStatus(snapshot);
   // If both players have made a choice, compute the result
   if (
     snapshot.child('players/1/choice').exists() &&
     snapshot.child('players/2/choice').exists()
   ) {
-    const playerOneChoice = snapshot.child('players/1').val().choice;
-    const playerTwoChoice = snapshot.child('players/2').val().choice;
-    const playerOneChoiceIdx = game.choices.indexOf(playerOneChoice, 0);
-    const playerTwoChoiceIdx = game.choices.indexOf(playerTwoChoice, 0);
-    // Compute player one's result
-    const result = game.results[playerTwoChoiceIdx][playerOneChoiceIdx];
-    // Reset player choices
-    gameRef.child('players/1/choice').remove();
-    gameRef.child('players/2/choice').remove();
-    // Update wins and losses
-    let winner;
-    let loser;
-    if (result === 'win') {
-      winner = 1;
-      loser = 2;
-    } else if (result === 'lose') {
-      winner = 2;
-      loser = 1;
-    }
-    if (result === 'win' || result === 'lose') {
-      // Update wins and losses
-      const wins = snapshot.child(`players/${winner}`).val().wins + 1;
-      const losses = snapshot.child(`players/${loser}`).val().losses + 1;
-      gameRef.child(`players/${winner}`).update({ wins });
-      gameRef.child(`players/${loser}`).update({ losses });
-      // Show winner
-      showWinner(winner, playerOneChoice, playerTwoChoice);
-      // Update DOM
-      updateScore();
-    } else {
-      $('#status h2').text('Tie!');
-      setTimeout(() => $('#status h2').text(''), 3000);
-    }
+    determineWinner(snapshot);
     resetStatus();
     // Reset turn value
     gameRef.update({ turn: 1 });
