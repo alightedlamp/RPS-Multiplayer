@@ -1,40 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Rock Paper Scissors Multiplayer</title>
-  <meta charset="UTF-8" />
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu|Bungee" rel="stylesheet">
-  <link rel="stylesheet" href="./css/styles.css" />
-  <script src="https://use.fontawesome.com/ad40d284e0.js"></script>
-</head>
-
-<body>
-  <div id="app">
-    <header>
-      <h1>Rock Paper Scissors Lizard Spock</h1>
-    </header>
-    <section id="player-selection">
-      <div class="container">
-        <h3>Who are you?</h3>
-        <form id="player-submit-form" class="form-group">
-          <input type="text" id="name" />
-          <button id="player-submit" class="btn">Submit</button>
-        </form>
-      </div>
-    </section>
-    <section id="game">
-      <div id="left-panel">
-        <div id="player-one">
-          <h3>Waiting for player one...</h3>
-          <div class="player-status">
-            <p id="player-one-status"></p>
-          </div>
-          <div class="choices" style="display:none">
-            <div class="choice btn" data-choice="r">
-              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M155.493,17.143c-7.188,6.559-14.283,13.036-21.383,19.509
+<!DOCTYPE html><html><head><title>Rock Paper Scissors Multiplayer</title><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css?family=Ubuntu|Bungee" rel="stylesheet"><link rel="stylesheet" href="./css/styles.css"><script src="https://use.fontawesome.com/ad40d284e0.js"></script></head><body><div id="app"><header><h1>Rock Paper Scissors Lizard Spock</h1></header><section id="player-selection"><div class="container"><h3>Who are you?</h3><form id="player-submit-form" class="form-group"><input type="text" id="name"> <button id="player-submit" class="btn">Submit</button></form></div></section><section id="game"><div id="left-panel"><div id="player-one"><h3>Waiting for player one...</h3><div class="player-status"><p id="player-one-status"></p></div><div class="choices" style="display:none"><div class="choice btn" data-choice="r"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M155.493,17.143c-7.188,6.559-14.283,13.036-21.383,19.509
                c-0.738,0.673-1.621,1.224-2.234,1.993c-5.578,7.004-13.344,8.353-21.67,9.059c-16.76,1.422-33.249,4.448-49.185,10.027
                c-8.627,3.02-11.354,6.836-12.016,16.13c-0.826,11.603-1.67,23.207-2.735,34.79c-0.412,4.485,2.271,6.57,6.334,9.472
                c1.948-12.617,3.783-24.508,5.619-36.398c0.32,0.041,0.641,0.081,0.962,0.121c-0.79,9-1.542,18.003-2.386,26.997
@@ -59,14 +23,7 @@
                c0.872-11.61,1.927-23.258,1.808-34.88c-0.115-11.2,5.264-18.004,15.276-20.436c16.27-3.952,32.804-6.823,49.252-10.013
                c4.059-0.787,9.289,0.354,12.125-1.816c7.559-5.78,14.107-12.88,21.217-19.606C113.556,4.777,66.486,6.453,35.424,39.346
                c-30.432,32.226-32.53,83.691-4.616,118.151c29.057,35.871,79.566,44.135,119.312,18.897
-               C187.31,152.782,196.804,108.323,187.589,79.618z"/>
-             </svg>             
-            </div>
-            <div class="choice btn" data-choice="p">
-              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <g>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M37.911,22.913c36.376-29.939,91.732-31.44,129.927,3.004
+               C187.31,152.782,196.804,108.323,187.589,79.618z"/></svg></div><div class="choice btn" data-choice="p"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><g><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M37.911,22.913c36.376-29.939,91.732-31.44,129.927,3.004
                  c39.927,36.007,45.157,95.719,12.695,136.637c-33.74,42.528-91.374,51.746-136.724,21.181C0.686,154.67-7.362,101.501,6.4,68.047
                  c16.1,10.769,33.226,20.276,39.624,40.387c2.949,9.271,8.748,15.982,16.615,21.615c7.83,5.606,14.802,12.398,22.401,18.349
                  c2.232,1.748,6.255,4.09,7.832,3.218c3.728-2.06,5.338-6.535,3.914-10.869c-1.061-3.225-2.885-6.4-5.07-9.011
@@ -85,19 +42,8 @@
                  c5.962,2.889,11.841,6.455,18.18,7.971c35.256,8.434,64.378,28.175,92.862,49.245c3.773,2.791,4.372,6.008,2.082,9.961
                  c-0.646,1.115-1.221,2.271-1.34,2.494c1.834,3.353,4.354,5.964,4.424,8.64c0.073,2.783-2.22,5.629-2.952,7.271
                  c1.238,3.029,3.295,5.512,2.859,7.428c-2.033,8.947-9.134,12.006-17.249,13.013c-1.049,8.576-4.771,11.99-13.177,11.999
-                 c-2.964,0.003-5.993-0.384-8.881-1.066c-10.707-2.531-20.161-7.609-28.884-14.278C101.274,130.306,96.567,127.599,92.054,124.637z"
-                 />
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M119.007,113.451c8.582,4.682,17.164,9.362,25.746,14.044
-                 c-0.26,0.464-0.519,0.929-0.777,1.393c-8.439-4.936-16.879-9.87-25.318-14.805C118.773,113.872,118.891,113.662,119.007,113.451z"
-                 />
-             </g>
-             </svg>             
-            </div>
-            <div class="choice btn" data-choice="s">
-              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <g>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.868,75.36c-1.606,14.853-2.978,29.714,16.792,34.121
+                 c-2.964,0.003-5.993-0.384-8.881-1.066c-10.707-2.531-20.161-7.609-28.884-14.278C101.274,130.306,96.567,127.599,92.054,124.637z"/><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M119.007,113.451c8.582,4.682,17.164,9.362,25.746,14.044
+                 c-0.26,0.464-0.519,0.929-0.777,1.393c-8.439-4.936-16.879-9.87-25.318-14.805C118.773,113.872,118.891,113.662,119.007,113.451z"/></g></svg></div><div class="choice btn" data-choice="s"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><g><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.868,75.36c-1.606,14.853-2.978,29.714,16.792,34.121
                  c-6.736,1.824-14.577-2.219-18.363-9.341c-2.562-4.818-2.64-7.39-0.642-21.121c-6.818-0.913-7.834-0.071-7.987,6.619
                  c-0.244,10.605-2.927,15.015-10.421,17.878c-3.977,1.52-6.267,0.836-7.24-3.645c-1.691-7.788-4.023-15.452-5.367-23.292
                  c-0.556-3.243-1.788-4.4-4.64-5.238c-17.688-5.199-35.325-10.573-53.002-15.812c-2.351-0.697-5.174-2.804-6.932,0.852
@@ -129,14 +75,7 @@
                  c-1.007,5.285,3.286,10.727,8.732,11.35C80.225,137.223,82.573,137.004,84.896,137.004z M101.967,153.572
                  c3.005-0.549,6.92-0.291,9.647-1.967c5.922-3.637,11.389-8.078,16.751-12.541c3.937-3.277,2.919-8.424-2.007-9.953
                  c-2.12-0.658-4.853-0.121-7.104,0.553c-10.451,3.129-20.867,6.391-31.196,9.896c-1.394,0.473-3.09,2.553-3.158,3.959
-                 c-0.204,4.24,0.998,7.99,6.214,8.604C94.562,152.529,97.999,153.039,101.967,153.572z"/>
-             </g>
-             </svg>             
-            </div>
-            <div class="choice btn" data-choice="l">
-              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M87.502,83.928c12.596-5.968,25.498-8.413,39.494-4.696
+                 c-0.204,4.24,0.998,7.99,6.214,8.604C94.562,152.529,97.999,153.039,101.967,153.572z"/></g></svg></div><div class="choice btn" data-choice="l"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M87.502,83.928c12.596-5.968,25.498-8.413,39.494-4.696
                c7.135,1.896,14.66,2.404,22.041,3.253c1.871,0.215,4.465-0.041,5.672-1.189c1.857-1.766,3.658-4.428,3.832-6.831
                c0.115-1.557-2.395-4.157-4.268-4.869c-12.578-4.778-25.264-9.284-38.01-13.599c-2.352-0.797-5.26-0.89-7.695-0.344
                c-11.469,2.576-22.864,5.488-34.571,7.429c6.06-2.095,12.306-3.771,18.141-6.37c12.395-5.52,24.202-5.912,36.602,0.584
@@ -157,14 +96,7 @@
                c0.59-2.785,3.175-6.066,5.729-7.363c14.53-7.379,29.368-14.149,44.018-21.299c4.277-2.087,8.199-1.876,12.438-0.012
                c16.154,7.104,32.391,14.019,48.547,21.114c6.672,2.93,7.799,6.807,3.48,12.866C160.482,82.299,154.291,88.225,144.908,85.868z
                 M137.248,85.545c-15.975-5.826-30.865-6.123-45.576,1.251c2.327,7.982,6.666,10.978,13.861,8.927
-               C115.875,92.774,126.033,89.181,137.248,85.545z"/>
-             </svg>
-            </div>
-            <div class="choice btn" data-choice="sp">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <g>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M136.039,85.795c3.68-10.683,7.598-21.293,10.859-32.103
+               C115.875,92.774,126.033,89.181,137.248,85.545z"/></svg></div><div class="choice btn" data-choice="sp"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><g><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M136.039,85.795c3.68-10.683,7.598-21.293,10.859-32.103
                  c0.725-2.402,0.022-6.379-1.625-8.036c-1.663-1.672-5.662-2.392-8.002-1.613c-2.137,0.71-4.122,3.739-4.965,6.166
                  c-4.305,12.399-8.218,24.936-12.271,37.422c-0.307,0.945-0.383,2.137-1.013,2.768c-1.267,1.268-2.843,2.227-4.292,3.312
                  c-1.014-1.365-2.73-2.638-2.928-4.113c-1.252-9.381-2.152-18.809-3.203-28.218c-0.793-7.097-1.557-14.198-2.491-21.276
@@ -188,30 +120,9 @@
                  c3.632-11.769,7.143-23.575,10.899-35.304c2.037-6.36,7.257-9.72,12.251-8.354c6.857,1.874,9.688,6.364,8.555,13.537
                  c-0.225,1.425-0.389,2.859-0.568,4.198c8.249,3.278,9.096,4.617,8.453,13.161c-0.1,1.324-0.322,2.643-0.557,3.951
                  c-2.95,16.539-6.604,32.989-8.678,49.636c-2.045,16.414-5.006,32.002-15.289,45.738
-                 C130.994,173.533,132.143,179.754,131.517,185.252z"/>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M105.504,160.064c2.438-13.828-0.438-22.473-13.609-33.293
-                 C106.018,132.469,110.919,143.752,105.504,160.064z"/>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M135.957,85.688c-1.371,5.062-2.741,10.122-4.209,15.539
-                 c-1.243-0.355-2.576-0.737-4.158-1.189c6.721-2.679,5.111-9.888,8.459-14.23C136.039,85.795,135.957,85.688,135.957,85.688z"/>
-             </g>
-             </svg>             
-            </div>
-          </div>
-          <div class="stats" style="display:none">
-            <p>Wins: <span id="player-one-wins"></span></p>
-            <p>Losses: <span id="player-one-losses"></span></p>
-          </div>
-        </div>
-        <div id="player-two">
-          <h3>Waiting for player two...</h3>
-          <div class="player-status">
-            <p id="player-two-status"></p>
-          </div>
-          <div class="choices" style="display:none">
-            <div class="choice btn" data-choice="r">
-              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M155.493,17.143c-7.188,6.559-14.283,13.036-21.383,19.509
+                 C130.994,173.533,132.143,179.754,131.517,185.252z"/><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M105.504,160.064c2.438-13.828-0.438-22.473-13.609-33.293
+                 C106.018,132.469,110.919,143.752,105.504,160.064z"/><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M135.957,85.688c-1.371,5.062-2.741,10.122-4.209,15.539
+                 c-1.243-0.355-2.576-0.737-4.158-1.189c6.721-2.679,5.111-9.888,8.459-14.23C136.039,85.795,135.957,85.688,135.957,85.688z"/></g></svg></div></div><div class="stats" style="display:none"><p>Wins: <span id="player-one-wins"></span></p><p>Losses: <span id="player-one-losses"></span></p></div></div><div id="player-two"><h3>Waiting for player two...</h3><div class="player-status"><p id="player-two-status"></p></div><div class="choices" style="display:none"><div class="choice btn" data-choice="r"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M155.493,17.143c-7.188,6.559-14.283,13.036-21.383,19.509
                c-0.738,0.673-1.621,1.224-2.234,1.993c-5.578,7.004-13.344,8.353-21.67,9.059c-16.76,1.422-33.249,4.448-49.185,10.027
                c-8.627,3.02-11.354,6.836-12.016,16.13c-0.826,11.603-1.67,23.207-2.735,34.79c-0.412,4.485,2.271,6.57,6.334,9.472
                c1.948-12.617,3.783-24.508,5.619-36.398c0.32,0.041,0.641,0.081,0.962,0.121c-0.79,9-1.542,18.003-2.386,26.997
@@ -236,14 +147,7 @@
                c0.872-11.61,1.927-23.258,1.808-34.88c-0.115-11.2,5.264-18.004,15.276-20.436c16.27-3.952,32.804-6.823,49.252-10.013
                c4.059-0.787,9.289,0.354,12.125-1.816c7.559-5.78,14.107-12.88,21.217-19.606C113.556,4.777,66.486,6.453,35.424,39.346
                c-30.432,32.226-32.53,83.691-4.616,118.151c29.057,35.871,79.566,44.135,119.312,18.897
-               C187.31,152.782,196.804,108.323,187.589,79.618z"/>
-             </svg>
-            </div>
-            <div class="choice btn" data-choice="p">
-              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <g>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M37.911,22.913c36.376-29.939,91.732-31.44,129.927,3.004
+               C187.31,152.782,196.804,108.323,187.589,79.618z"/></svg></div><div class="choice btn" data-choice="p"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><g><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M37.911,22.913c36.376-29.939,91.732-31.44,129.927,3.004
                  c39.927,36.007,45.157,95.719,12.695,136.637c-33.74,42.528-91.374,51.746-136.724,21.181C0.686,154.67-7.362,101.501,6.4,68.047
                  c16.1,10.769,33.226,20.276,39.624,40.387c2.949,9.271,8.748,15.982,16.615,21.615c7.83,5.606,14.802,12.398,22.401,18.349
                  c2.232,1.748,6.255,4.09,7.832,3.218c3.728-2.06,5.338-6.535,3.914-10.869c-1.061-3.225-2.885-6.4-5.07-9.011
@@ -262,19 +166,8 @@
                  c5.962,2.889,11.841,6.455,18.18,7.971c35.256,8.434,64.378,28.175,92.862,49.245c3.773,2.791,4.372,6.008,2.082,9.961
                  c-0.646,1.115-1.221,2.271-1.34,2.494c1.834,3.353,4.354,5.964,4.424,8.64c0.073,2.783-2.22,5.629-2.952,7.271
                  c1.238,3.029,3.295,5.512,2.859,7.428c-2.033,8.947-9.134,12.006-17.249,13.013c-1.049,8.576-4.771,11.99-13.177,11.999
-                 c-2.964,0.003-5.993-0.384-8.881-1.066c-10.707-2.531-20.161-7.609-28.884-14.278C101.274,130.306,96.567,127.599,92.054,124.637z"
-                 />
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M119.007,113.451c8.582,4.682,17.164,9.362,25.746,14.044
-                 c-0.26,0.464-0.519,0.929-0.777,1.393c-8.439-4.936-16.879-9.87-25.318-14.805C118.773,113.872,118.891,113.662,119.007,113.451z"
-                 />
-             </g>
-             </svg>             
-            </div>
-            <div class="choice btn" data-choice="s">
-              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <g>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.868,75.36c-1.606,14.853-2.978,29.714,16.792,34.121
+                 c-2.964,0.003-5.993-0.384-8.881-1.066c-10.707-2.531-20.161-7.609-28.884-14.278C101.274,130.306,96.567,127.599,92.054,124.637z"/><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M119.007,113.451c8.582,4.682,17.164,9.362,25.746,14.044
+                 c-0.26,0.464-0.519,0.929-0.777,1.393c-8.439-4.936-16.879-9.87-25.318-14.805C118.773,113.872,118.891,113.662,119.007,113.451z"/></g></svg></div><div class="choice btn" data-choice="s"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><g><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.868,75.36c-1.606,14.853-2.978,29.714,16.792,34.121
                  c-6.736,1.824-14.577-2.219-18.363-9.341c-2.562-4.818-2.64-7.39-0.642-21.121c-6.818-0.913-7.834-0.071-7.987,6.619
                  c-0.244,10.605-2.927,15.015-10.421,17.878c-3.977,1.52-6.267,0.836-7.24-3.645c-1.691-7.788-4.023-15.452-5.367-23.292
                  c-0.556-3.243-1.788-4.4-4.64-5.238c-17.688-5.199-35.325-10.573-53.002-15.812c-2.351-0.697-5.174-2.804-6.932,0.852
@@ -306,14 +199,7 @@
                  c-1.007,5.285,3.286,10.727,8.732,11.35C80.225,137.223,82.573,137.004,84.896,137.004z M101.967,153.572
                  c3.005-0.549,6.92-0.291,9.647-1.967c5.922-3.637,11.389-8.078,16.751-12.541c3.937-3.277,2.919-8.424-2.007-9.953
                  c-2.12-0.658-4.853-0.121-7.104,0.553c-10.451,3.129-20.867,6.391-31.196,9.896c-1.394,0.473-3.09,2.553-3.158,3.959
-                 c-0.204,4.24,0.998,7.99,6.214,8.604C94.562,152.529,97.999,153.039,101.967,153.572z"/>
-             </g>
-             </svg>             
-            </div>
-            <div class="choice btn" data-choice="l">
-              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M87.502,83.928c12.596-5.968,25.498-8.413,39.494-4.696
+                 c-0.204,4.24,0.998,7.99,6.214,8.604C94.562,152.529,97.999,153.039,101.967,153.572z"/></g></svg></div><div class="choice btn" data-choice="l"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M87.502,83.928c12.596-5.968,25.498-8.413,39.494-4.696
                c7.135,1.896,14.66,2.404,22.041,3.253c1.871,0.215,4.465-0.041,5.672-1.189c1.857-1.766,3.658-4.428,3.832-6.831
                c0.115-1.557-2.395-4.157-4.268-4.869c-12.578-4.778-25.264-9.284-38.01-13.599c-2.352-0.797-5.26-0.89-7.695-0.344
                c-11.469,2.576-22.864,5.488-34.571,7.429c6.06-2.095,12.306-3.771,18.141-6.37c12.395-5.52,24.202-5.912,36.602,0.584
@@ -334,14 +220,7 @@
                c0.59-2.785,3.175-6.066,5.729-7.363c14.53-7.379,29.368-14.149,44.018-21.299c4.277-2.087,8.199-1.876,12.438-0.012
                c16.154,7.104,32.391,14.019,48.547,21.114c6.672,2.93,7.799,6.807,3.48,12.866C160.482,82.299,154.291,88.225,144.908,85.868z
                 M137.248,85.545c-15.975-5.826-30.865-6.123-45.576,1.251c2.327,7.982,6.666,10.978,13.861,8.927
-               C115.875,92.774,126.033,89.181,137.248,85.545z"/>
-             </svg>             
-            </div>
-            <div class="choice btn" data-choice="sp">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve">
-             <g>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M136.039,85.795c3.68-10.683,7.598-21.293,10.859-32.103
+               C115.875,92.774,126.033,89.181,137.248,85.545z"/></svg></div><div class="choice btn" data-choice="sp"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 202 202" style="enable-background:new 0 0 202 202;" xml:space="preserve"><g><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M136.039,85.795c3.68-10.683,7.598-21.293,10.859-32.103
                  c0.725-2.402,0.022-6.379-1.625-8.036c-1.663-1.672-5.662-2.392-8.002-1.613c-2.137,0.71-4.122,3.739-4.965,6.166
                  c-4.305,12.399-8.218,24.936-12.271,37.422c-0.307,0.945-0.383,2.137-1.013,2.768c-1.267,1.268-2.843,2.227-4.292,3.312
                  c-1.014-1.365-2.73-2.638-2.928-4.113c-1.252-9.381-2.152-18.809-3.203-28.218c-0.793-7.097-1.557-14.198-2.491-21.276
@@ -365,46 +244,6 @@
                  c3.632-11.769,7.143-23.575,10.899-35.304c2.037-6.36,7.257-9.72,12.251-8.354c6.857,1.874,9.688,6.364,8.555,13.537
                  c-0.225,1.425-0.389,2.859-0.568,4.198c8.249,3.278,9.096,4.617,8.453,13.161c-0.1,1.324-0.322,2.643-0.557,3.951
                  c-2.95,16.539-6.604,32.989-8.678,49.636c-2.045,16.414-5.006,32.002-15.289,45.738
-                 C130.994,173.533,132.143,179.754,131.517,185.252z"/>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M105.504,160.064c2.438-13.828-0.438-22.473-13.609-33.293
-                 C106.018,132.469,110.919,143.752,105.504,160.064z"/>
-               <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M135.957,85.688c-1.371,5.062-2.741,10.122-4.209,15.539
-                 c-1.243-0.355-2.576-0.737-4.158-1.189c6.721-2.679,5.111-9.888,8.459-14.23C136.039,85.795,135.957,85.688,135.957,85.688z"/>
-             </g>
-             </svg>             
-            </div>
-          </div>
-          <div class="stats" style="display:none">
-              <p>Wins: <span id="player-two-wins"></span></p>
-              <p>Losses: <span id="player-two-losses"></span></p>  
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="status">
-      <h2></h2>
-    </section>
-    <section id="chat" class="minimized">
-      <div class="toggle">
-        <span id="chat-toggle"><i class="fa fa-comments" aria-hidden="true"></i></span>
-      </div>
-      <div class="chat-window">
-        <h2>Chat</h2>
-        <div id="chat-messages"></div>
-        <form id="chat-form" class="form-group">
-          <input type="text" id="chat-msg" />
-          <button id="chat-submit" class="btn" disabled>Send</button>
-        </form>
-      </div>
-    </section>
-  </div>
-  <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
-  <script src="app.js"></script>
-</body>
-
-</html>
+                 C130.994,173.533,132.143,179.754,131.517,185.252z"/><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M105.504,160.064c2.438-13.828-0.438-22.473-13.609-33.293
+                 C106.018,132.469,110.919,143.752,105.504,160.064z"/><path style="fill-rule:evenodd;clip-rule:evenodd;" d="M135.957,85.688c-1.371,5.062-2.741,10.122-4.209,15.539
+                 c-1.243-0.355-2.576-0.737-4.158-1.189c6.721-2.679,5.111-9.888,8.459-14.23C136.039,85.795,135.957,85.688,135.957,85.688z"/></g></svg></div></div><div class="stats" style="display:none"><p>Wins: <span id="player-two-wins"></span></p><p>Losses: <span id="player-two-losses"></span></p></div></div></div></section><section id="status"><h2></h2></section><section id="chat" class="minimized"><div class="toggle"><span id="chat-toggle"><i class="fa fa-comments" aria-hidden="true"></i></span></div><div class="chat-window"><h2>Chat</h2><div id="chat-messages"></div><form id="chat-form" class="form-group"><input type="text" id="chat-msg"> <button id="chat-submit" class="btn" disabled="disabled">Send</button></form></div></section></div><script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js"></script><script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script><script src="app.js"></script></body></html>
